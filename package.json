@@ -40,6 +40,7 @@
     "express-flash": "0.0.2",
     "express-session": "^1.16.2",
     "express-validator": "^6.0.1",
+    "face-api.js": "^0.20.1",
     "fbgraph": "^1.4.4",
     "lodash": "^4.17.11",
     "lusca": "^1.6.1",

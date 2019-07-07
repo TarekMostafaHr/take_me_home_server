@@ -14,17 +14,16 @@ import cors from "cors";
 import multer from 'multer';
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
-// const upload = multer({dest: __dirname + '/uploads/images'});
 
 const storage = multer.diskStorage({
-  destination:  __dirname + '/uploads/images',
+  destination:  __dirname + '/public/images',
   filename: function(req, file, cb){
-     cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+     cb(null,"IMAGE-" + Date.now() + "-" + file.originalname);
   }
 });
 
 const upload = multer({
-  storage: storage,
+  storage,
   limits:{fileSize: 1000000},
 }).single("image");
 

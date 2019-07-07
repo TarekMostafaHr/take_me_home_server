@@ -9,5 +9,4 @@ export const upload = (req: Request, res: Response) => {
   if(req.file) {
     res.json(req.file);
 }
-// res.json({message: "hi", req: req.body, file: req.file})
 };
