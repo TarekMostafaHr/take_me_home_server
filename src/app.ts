@@ -10,12 +10,30 @@ import path from "path";
 import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
+import cors from "cors";
+import multer from 'multer';
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+
+// const upload = multer({dest: __dirname + '/uploads/images'});
+
+const storage = multer.diskStorage({
+  destination:  __dirname + '/uploads/images',
+  filename: function(req, file, cb){
+     cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits:{fileSize: 1000000},
+}).single("image");
+
 
 const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
+import * as uploadController from "./controllers/upload_image";
 import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
 import * as contactController from "./controllers/contact";
@@ -42,6 +60,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true} ).then(
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
+app.use(cors());
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -86,6 +105,7 @@ app.use(
  * Primary app routes.
  */
 app.get("/", homeController.index);
+app.all("/upload", upload, uploadController.upload);
 app.get("/login", userController.getLogin);
 app.post("/login", userController.postLogin);
 app.get("/logout", userController.logout);
