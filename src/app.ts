@@ -14,6 +14,11 @@ import cors from "cors";
 import multer from 'multer';
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
+// import '@tensorflow/tfjs-node';
+
+
+import * as faceapi from 'face-api.js';
+
 
 const storage = multer.diskStorage({
   destination:  __dirname + '/public/images',
