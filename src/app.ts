@@ -19,7 +19,6 @@ import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 // import * as faceapi from 'face-api.js';
 
-
 const storage = multer.diskStorage({
   destination:  __dirname + '/public/images',
   filename: function(req, file, cb){
@@ -37,6 +36,7 @@ const MongoStore = mongo(session);
 
 // Controllers (route handlers)
 import * as homeController from "./controllers/home";
+import * as testController from "./controllers/test";
 import * as uploadController from "./controllers/upload_image";
 
 
@@ -104,6 +104,7 @@ app.use(
  * Primary app routes.
  */
 app.get("/", homeController.index);
+app.get("/test", testController.test);
 app.all("/upload", upload, uploadController.upload);
 
 
